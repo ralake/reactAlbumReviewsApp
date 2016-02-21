@@ -4,12 +4,14 @@
   "description": "chat app built using react",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "ralake",
   "license": "ISC",
   "dependencies": {
     "babel-preset-react": "^6.5.0",
+    "express": "^4.13.4",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "webpack": "^1.12.13"
