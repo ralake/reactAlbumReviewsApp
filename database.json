@@ -1,16 +1,51 @@
 [
-  {
-  	"artist": "One",
-  	"title": "First Album",
-  	"review": "this is a good album",
-  	"likes": 1,
-    "id": 123
-  },
-  {
-  	"artist": "Two",
-  	"title": "Last Album",
-  	"review": "this is a better album than all One's albums put together",
-  	"likes": 5,
-    "id": 456
-  }
+    {
+        "artist": "One",
+        "title": "First Album",
+        "reviews": [
+            {
+                "text": "this is a good album",
+                "author": "Rich",
+                "id": "1456165988096",
+                "albumId": "1456165972024",
+                "likes": 2
+            },
+            {
+                "text": "this is a terrible album",
+                "author": "Ben",
+                "id": "1456165995857",
+                "albumId": "1456165972024",
+                "likes": 5
+            },
+            {
+                "text": "test",
+                "author": "jason",
+                "albumId": "1456165972024",
+                "id": "1456171126540",
+                "likes": 0
+            }
+        ],
+        "id": "1456165972024"
+    },
+    {
+        "artist": "Two",
+        "title": "Last Album",
+        "reviews": [
+            {
+                "text": "this one is better than all of One's put together",
+                "author": "Pavlova",
+                "id": "1456166002889",
+                "albumId": "1456165980888",
+                "likes": 0
+            },
+            {
+                "text": "this is the best",
+                "author": "Sugs",
+                "id": "1456166009297",
+                "albumId": "1456165980888",
+                "likes": 10
+            }
+        ],
+        "id": "1456165980888"
+    }
 ]

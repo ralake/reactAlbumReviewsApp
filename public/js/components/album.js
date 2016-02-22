@@ -10,9 +10,7 @@ const Album = React.createClass({
         <h3 className='albumTitle'>
           {this.props.title}
         </h3>
-        <p className='albumReivew'>
-          {this.props.review}
-        </p>
+        {this.props.children}
       </div>
 		)
   }

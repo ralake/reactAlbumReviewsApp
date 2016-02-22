@@ -60,7 +60,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_albumList2.default, { url: 'api/albums' }), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_albumList2.default, { url: 'api/albums', interval: 500 }), document.getElementById('root'));
 
 /***/ },
 /* 1 */
@@ -19677,7 +19677,15 @@
 
 	var _album2 = _interopRequireDefault(_album);
 
-	var _jquery = __webpack_require__(161);
+	var _review = __webpack_require__(161);
+
+	var _review2 = _interopRequireDefault(_review);
+
+	var _reviewForm = __webpack_require__(162);
+
+	var _reviewForm2 = _interopRequireDefault(_reviewForm);
+
+	var _jquery = __webpack_require__(163);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -19690,25 +19698,58 @@
 	    return { data: [] };
 	  },
 
-	  componentDidMount: function componentDidMount() {
+	  loadAlbumsFromServer: function loadAlbumsFromServer() {
 	    var self = this;
 	    _jquery2.default.ajax({
 	      url: this.props.url,
+	      type: 'GET',
 	      dataType: 'json',
 	      cache: false,
 	      success: function success(data) {
 	        self.setState({ data: data });
 	      },
-	      error: function error(chr, status, _error) {
+	      error: function error(xhr, status, _error) {
 	        console.error(_error);
 	      }
 	    });
 	  },
 
-	  render: function render() {
-	    var albums = this.state.data.map(function (album) {
-	      return _react2.default.createElement(_album2.default, { artist: album.artist, title: album.title, key: album.id, review: album.review });
+	  componentDidMount: function componentDidMount() {
+	    this.loadAlbumsFromServer();
+	    setInterval(this.loadAlbumsFromServer, this.props.interval);
+	  },
+
+	  handleReviewSubmit: function handleReviewSubmit(review) {
+	    var self = this;
+	    _jquery2.default.ajax({
+	      url: this.props.url,
+	      type: 'POST',
+	      dataType: 'json',
+	      data: review,
+	      cache: false,
+	      success: function success(data) {
+	        self.setState({ data: data });
+	      },
+	      error: function error(xhr, status, _error2) {
+	        console.error(_error2);
+	      }
 	    });
+	  },
+
+	  render: function render() {
+	    var self = this;
+	    var albums = this.state.data.map(function (album) {
+	      var reviews = album.reviews.map(function (review) {
+	        return _react2.default.createElement(_review2.default, { key: review.id, likes: review.likes, text: review.text, albumId: album.id });
+	      });
+	      return _react2.default.createElement(
+	        _album2.default,
+	        { artist: album.artist, title: album.title, key: album.id },
+	        _react2.default.createElement(_reviewForm2.default, { onReviewSubmit: self.handleReviewSubmit, albumId: album.id }),
+	        reviews
+	      );
+	    });
+
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'albumList', data: this.state.data },
@@ -19748,11 +19789,7 @@
 	        { className: 'albumTitle' },
 	        this.props.title
 	      ),
-	      _react2.default.createElement(
-	        'p',
-	        { className: 'albumReivew' },
-	        this.props.review
-	      )
+	      this.props.children
 	    );
 	  }
 	});
@@ -19761,6 +19798,99 @@
 
 /***/ },
 /* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Review = _react2.default.createClass({
+	  displayName: 'Review',
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'albumReview' },
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'reviewLikes' },
+	        'Likes - ',
+	        this.props.likes
+	      ),
+	      _react2.default.createElement('br', null),
+	      this.props.text
+	    );
+	  }
+	});
+
+	module.exports = Review;
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ReviewForm = _react2.default.createClass({
+	  displayName: 'ReviewForm',
+
+	  getInitialState: function getInitialState() {
+	    return { author: '', text: '' };
+	  },
+
+	  handleAuthorChange: function handleAuthorChange(event) {
+	    this.setState({ author: event.target.value });
+	  },
+
+	  handleTextChange: function handleTextChange(event) {
+	    this.setState({ text: event.target.value });
+	  },
+
+	  handleSubmit: function handleSubmit(event) {
+	    event.preventDefault();
+	    var author = this.state.author;
+	    var text = this.state.text;
+	    var review = { author: author, text: text, albumId: this.props.albumId };
+	    if (!author || !text) return;
+	    this.props.onReviewSubmit(review);
+	    this.setState(review);
+	  },
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'form',
+	      { className: 'reviewForm', onSubmit: this.handleSubmit },
+	      _react2.default.createElement('input', {
+	        type: 'text',
+	        placeholder: 'Your name...',
+	        value: this.state.author,
+	        onChange: this.handleAuthorChange
+	      }),
+	      _react2.default.createElement('input', {
+	        type: 'text',
+	        placeholder: 'write review here...',
+	        value: this.state.text,
+	        onChange: this.handleTextChange
+	      }),
+	      _react2.default.createElement('input', { type: 'submit', value: 'Post' })
+	    );
+	  }
+	});
+
+	module.exports = ReviewForm;
+
+/***/ },
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
