@@ -54,13 +54,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _chatBox = __webpack_require__(159);
+	var _reviewsBox = __webpack_require__(159);
 
-	var _chatBox2 = _interopRequireDefault(_chatBox);
+	var _reviewsBox2 = _interopRequireDefault(_reviewsBox);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_chatBox2.default, null), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_reviewsBox2.default, null), document.getElementById('root'));
 
 /***/ },
 /* 1 */
@@ -19667,7 +19667,7 @@
 /* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _react = __webpack_require__(1);
 
@@ -19675,19 +19675,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ChatBox = _react2.default.createClass({
-	  displayName: "ChatBox",
+	var ReviewsBox = _react2.default.createClass({
+	  displayName: 'ReviewsBox',
 
 	  render: function render() {
-	    return _react2.default.createElement(
-	      "div",
-	      { className: "chatBox" },
-	      "Hello, world! I am a ChatBox."
-	    );
+	    return _react2.default.createElement('div', { className: 'reviewsBox' });
 	  }
 	});
 
-	module.exports = ChatBox;
+	module.exports = ReviewsBox;
 
 /***/ }
 /******/ ]);

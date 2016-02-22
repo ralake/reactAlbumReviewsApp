@@ -1,11 +1,9 @@
-var webpack = require('webpack')
- 
 module.exports = {
   entry: './public/js/app.js',
   output: {
     path: './public/js',
     filename: 'bundle.js'
-   },
+  },
   module: {
     loaders: [
       {
@@ -17,5 +15,5 @@ module.exports = {
         }
       }
     ]
-  },
+  }
 }

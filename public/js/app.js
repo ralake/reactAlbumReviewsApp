@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ChatBox from './components/chatBox.js'
+import ReviewsBox from './components/reviewsBox.js'
 
 ReactDOM.render(
-  <ChatBox />,
+  <ReviewsBox />,
   document.getElementById('root')
-);
+)
