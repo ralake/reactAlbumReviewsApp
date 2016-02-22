@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ReviewsBox from './components/reviewsBox.js'
+import AlbumList from './components/albumList.js'
 
 ReactDOM.render(
-  <ReviewsBox />,
+  <AlbumList url='api/albums'/>,
   document.getElementById('root')
 )

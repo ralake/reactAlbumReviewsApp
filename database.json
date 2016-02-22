@@ -1,0 +1,16 @@
+[
+  {
+  	"artist": "One",
+  	"title": "First Album",
+  	"review": "this is a good album",
+  	"likes": 1,
+    "id": 123
+  },
+  {
+  	"artist": "Two",
+  	"title": "Last Album",
+  	"review": "this is a better album than all One's albums put together",
+  	"likes": 5,
+    "id": 456
+  }
+]
